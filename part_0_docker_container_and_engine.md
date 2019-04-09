@@ -54,13 +54,13 @@ Outline instructions for how an image will create a container.
 * Open terminal and check whether Docker is working by running ```docker```.
 * Run ```docker search <image name>```. Docker searches all images in Docker Hub
 and shows the result.
-* ```docker create --name=foo -it <image name> <args>``` to create the container.
+* ```docker create --name=<name> -it <image> <command>``` to create the container.
 E.g. ```docker create --name=foo -it ubuntu bash```.  
 This creates a container with the image *ubuntu*, but does not run it.
 Just a file system is created. Hence, when ```docker container ls``` does not
 list the container just created.
 To see all container, running or not, run ```docker container ls -a```.  
-To start a container, ```docker start <container name>```. Due to the flag *-it*
+To start a container, ```docker start <container name or id>```. Due to the flag *-it*
 added while creation of container, it can be opened in this console.
 Run ```docker attach foo```, to launch the container named foo in the console.
 The tag in the console immediately changes from *username* to *root@<containerid>*.
@@ -77,3 +77,14 @@ that were executed in the foo container.
 The command ```docker rm foo``` will remove the *foo* named container from host machine
 and free memory. This command will through an error if the container is running and
 an attempt to remove it is made. To stop a container, ```docker stop foo``` is executed.
+To forcefully remove a container, ```docker rm -f foo```.
+
+### Create, Start and Attach in one go.
+Docker command ```run``` is very powerful and is the combination of create, start and attach
+commands. ```docker run --name=bar -it ubuntu bash``` will directly open the console
+in the new container, where we can access its file systems.
+
+Docker uses Image Cache feature. Once an image is pulled and a container is created,
+the second time container creation using the same image is much faster. All cached images
+can be viewed by ```docker image ls```. This is very helpful when containers are
+to be created on a daily basis, using the same image.
